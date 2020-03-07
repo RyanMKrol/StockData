@@ -28,7 +28,7 @@ function buildApiUrl(
   const apiKey = credentials.key
   const url = `${BASE_URL}&apikey=${apiKey}&symbol=${ticker}`
 
-  console.log(`Using LastFM URL: ${url}`)
+  console.log(`Using AlphaVantage URL: ${url}`)
 
   return url
 }
