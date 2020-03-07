@@ -1,0 +1,1 @@
+export { fetchTickerPriceData } from './priceData'
