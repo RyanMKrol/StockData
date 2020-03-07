@@ -1,3 +1,4 @@
+import schedule from 'node-schedule'
 import async from 'async'
 import MailSender from 'noodlemail'
 
@@ -22,7 +23,9 @@ const mailClient = new MailSender(gmailCredentials)
 mailClient.setFrom('"StockData" <ryankrol.m@gmail.com>')
 mailClient.setTo('ryankrol.m@gmail.com')
 
-async function main() {
+schedule.scheduleJob('0 0 0 * * *', async () => {
+  await mailClient.sendMail('Beginning stock data udpate!', '')
+
   // fetch the tickers for the index we want to get data for - in this case the FTSE 350
   const tickers = await fetchIndexTickers()
 
@@ -56,6 +59,8 @@ async function main() {
       resolve()
     })
   })
+
+  await mailClient.sendMail('Updated stock data for the day!', '')
 }
 
 main()
