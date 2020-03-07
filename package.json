@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@types/node-fetch": "^2.5.5",
+    "aws-sdk": "^2.635.0",
     "node-fetch": "^2.6.0"
   }
 }
