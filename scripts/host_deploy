@@ -1,0 +1,12 @@
+AES_PASS=$1
+
+cd ~
+rm -rf StockData
+git clone https://github.com/RyanMKrol/StockData.git
+cd StockData
+git pull
+npm install
+npm run build
+pm2 delete StockData
+pm2 start build/src/app.js --name StockData
+pm2 save
