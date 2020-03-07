@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk'
-import dynamoCredentials from './../../../credentials/dynamoCredentials.json'
+import dynamoCredentials from './../../../credentials/dynamo.json'
 
 AWS.config.update(dynamoCredentials)
 AWS.config.update({

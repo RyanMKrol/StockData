@@ -2,7 +2,7 @@ import schedule from 'node-schedule'
 import async from 'async'
 import MailSender from 'noodlemail'
 
-import gmailCredentials from './../credentials/GmailCredentials.json'
+import gmailCredentials from './../credentials/gmail.json'
 import { fetchIndexTickers } from './api/stocktickersapi'
 import { fetchTickerPriceData } from './api/alphavantage'
 import { processAlphavantageApiResponse } from './process'
@@ -61,6 +61,4 @@ schedule.scheduleJob('0 0 0 * * *', async () => {
   })
 
   await mailClient.sendMail('Updated stock data for the day!', '')
-}
-
-main()
+})
