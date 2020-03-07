@@ -3,12 +3,20 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "start": "npm run-script build && ts-node build/index.js"
+    "build": "npm run-script lint && tsc",
+    "start": "npm run-script build && ts-node build/src/index.js",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "license": "MIT",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
+    "eslint": "^6.8.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
+  },
+  "dependencies": {
+    "@types/node-fetch": "^2.5.5",
+    "node-fetch": "^2.6.0"
   }
 }
