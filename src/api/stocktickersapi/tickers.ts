@@ -1,9 +1,12 @@
 import fetch from 'node-fetch'
 
-const URL = 'http://stocktickersapi.xyz/api/tickers/ftse_350'
+const BASE_URL = 'http://stocktickersapi.xyz/api/tickers'
+const DEFAULT_INDEX = 'ftse_350'
 
-async function fetchIndexTickers(): Promise<Array<string>> {
-  return fetch(URL)
+async function fetchIndexTickers(index?: string): Promise<Array<string>> {
+  const url = buildApiUrl(index)
+
+  return fetch(url)
     .then((res: any) => {
       return res.json()
     })
@@ -16,6 +19,16 @@ async function fetchIndexTickers(): Promise<Array<string>> {
     })
 }
 
+function buildApiUrl(
+  index?: string
+): string {
+  const urlIndex = index || DEFAULT_INDEX
+  const url = `${BASE_URL}/${urlIndex}`
+
+  console.log(`Using stocktickersapi URL: ${url}`)
+
+  return url
+}
 
 function validateApiResponse(response: any): void {
   if (
