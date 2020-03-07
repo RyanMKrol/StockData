@@ -4,6 +4,9 @@ cd ~
 rm -rf StockData
 git clone https://github.com/RyanMKrol/StockData.git
 cd StockData
+openssl aes-256-cbc -d -a -in credentials/alphavantage.json.enc -out credentials/alphavantage.json -k $AES_PASS
+openssl aes-256-cbc -d -a -in credentials/dynamo.json.enc -out credentials/dynamo.json -k $AES_PASS
+openssl aes-256-cbc -d -a -in credentials/gmail.json.enc -out credentials/gmail.json -k $AES_PASS
 git pull
 npm install
 npm run build
