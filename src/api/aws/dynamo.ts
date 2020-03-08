@@ -1,7 +1,8 @@
 import DynamoDBWrapper from 'noodle-dynamo'
 import dynamoCredentials from './../../../credentials/dynamo.json'
 
-const dynamoDb = new DynamoDBWrapper(dynamoCredentials)
+const AWS_REGION = 'us-east-2'
+const dynamoDb = new DynamoDBWrapper(dynamoCredentials, AWS_REGION)
 
 export function readTable(ticker: string) {
   const table = 'TickerData'
