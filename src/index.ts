@@ -17,7 +17,7 @@ const MS_IN_S = 1000
 const MAX_CONCURRENT_REQUESTS = 1
 
 //roughy 5 years of daily price movements
-const MAX_SUPPORTED_DAYS = 1300
+const MAX_SUPPORTED_DAYS = 550
 
 const mailClient = new MailSender(gmailCredentials)
 mailClient.setFrom('"StockData" <ryankrol.m@gmail.com>')
