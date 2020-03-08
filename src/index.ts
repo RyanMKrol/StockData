@@ -24,41 +24,45 @@ mailClient.setFrom('"StockData" <ryankrol.m@gmail.com>')
 mailClient.setTo('ryankrol.m@gmail.com')
 
 schedule.scheduleJob('0 0 12 * * *', async () => {
-  await mailClient.sendMail('Beginning stock data udpate!', '')
+  try {
+    await mailClient.sendMail('Beginning stock data udpate!', '')
 
-  // fetch the tickers for the index we want to get data for - in this case the FTSE 350
-  const tickers = await fetchIndexTickers()
+    // fetch the tickers for the index we want to get data for - in this case the FTSE 350
+    const tickers = await fetchIndexTickers()
 
-  // mapLimit args:
-  //   * first is the items you want to iterate over
-  //   * second is the number of concurrent requests you want to allow
-  //   * third is the function to do with each item
-  //   * fourth is the callback to call in the third argument to signify you're done
-  await new Promise((resolve, reject) => {
-    async.mapLimit(tickers, MAX_CONCURRENT_REQUESTS, async function(ticker: string, callback: Function) {
-      try {
-        const tickerData = await fetchTickerPriceData(ticker)
+    // mapLimit args:
+    //   * first is the items you want to iterate over
+    //   * second is the number of concurrent requests you want to allow
+    //   * third is the function to do with each item
+    //   * fourth is the callback to call in the third argument to signify you're done
+    await new Promise((resolve, reject) => {
+      async.mapLimit(tickers, MAX_CONCURRENT_REQUESTS, async function(ticker: string, callback: Function) {
+        try {
+          const tickerData = await fetchTickerPriceData(ticker)
 
-        // cut down the amount of items we need to write to the database. this is done
-        // to reduce the amount of write capacity units i'm using per write
-        const processedTickerData = processAlphavantageApiResponse(tickerData).slice(0, MAX_SUPPORTED_DAYS)
+          // cut down the amount of items we need to write to the database. this is done
+          // to reduce the amount of write capacity units i'm using per write
+          const processedTickerData = processAlphavantageApiResponse(tickerData).slice(0, MAX_SUPPORTED_DAYS)
 
-        await writeTable(ticker, processedTickerData)
+          await writeTable(ticker, processedTickerData)
 
-        // wait to start next batch, API limits to 5 requests per 60s
-        await wait(SECONDS_WAIT*MS_IN_S)
+          // wait to start next batch, API limits to 5 requests per 60s
+          await wait(SECONDS_WAIT*MS_IN_S)
 
-        callback()
-      } catch (error) {
-        const errorMessage =
-          `Encountered an error when gathering data for ticker - ${ticker}, error = ${error.toString()}`
-        await mailClient.sendMail('Encountered an error when updating stock data', errorMessage)
-        callback()
-      }
-    }, (err: any, results: any) => {
-      resolve()
+          callback()
+        } catch (error) {
+          const errorMessage =
+            `Encountered an error when gathering data for ticker - ${ticker}, error = ${error.toString()}`
+          await mailClient.sendMail('Encountered an error when updating stock data', errorMessage)
+          callback()
+        }
+      }, (err: any, results: any) => {
+        resolve()
+      })
     })
-  })
 
-  await mailClient.sendMail('Updated stock data for the day!', '')
+    await mailClient.sendMail('Updated stock data for the day!', '')
+  } catch (error) {
+    await mailClient.sendMail('Could not update stock data for the day', error.toString())
+  }
 })
