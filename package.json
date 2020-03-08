@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "async": "^3.2.0",
-    "aws-sdk": "^2.635.0",
     "node-fetch": "^2.6.0",
     "node-schedule": "^1.3.2",
+    "noodle-dynamo": "^1.0.3",
     "noodlemail": "^1.0.1"
   }
 }

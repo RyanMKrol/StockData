@@ -1,1 +1,1 @@
-export { readTable, writeTable, readWholeTable } from './dynamo'
+export { readTable, writeTable } from './dynamo'
