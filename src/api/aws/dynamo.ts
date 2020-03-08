@@ -1,69 +1,24 @@
-import AWS from 'aws-sdk'
+import DynamoDBWrapper from 'noodle-dynamo'
 import dynamoCredentials from './../../../credentials/dynamo.json'
 
-AWS.config.update(dynamoCredentials)
-AWS.config.update({
-  region: 'us-east-2',
-})
+const dynamoDb = new DynamoDBWrapper(dynamoCredentials)
 
 export function readTable(ticker: string) {
-  const docClient = new AWS.DynamoDB.DocumentClient()
-
-  const params = {
-    TableName : 'TickerData',
-    KeyConditionExpression: 'ticker = :ticker',
-    ExpressionAttributeValues: {
-      ':ticker': ticker
-    }
+  const table = 'TickerData'
+  const expression = 'ticker = :ticker'
+  const expressionData = {
+    ':ticker': ticker,
   }
 
-  return new Promise((resolve, reject) => {
-    docClient.query(params, function(err: any, data: any) {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(data)
-      }
-    })
-  })
-}
-
-export function readWholeTable() {
-  const docClient = new AWS.DynamoDB.DocumentClient()
-
-  const params = {
-    TableName : 'TickerData',
-  }
-
-  return new Promise((resolve, reject) => {
-    docClient.scan(params, function(err: any, data: any) {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(data)
-      }
-    })
-  })
+  return dynamoDb.readTable(table, expression, expressionData)
 }
 
 export function writeTable(ticker: string, priceData: any) {
-  const docClient = new AWS.DynamoDB.DocumentClient()
-
-  const params = {
-    TableName: 'TickerData',
-    Item: {
-      'ticker': ticker,
-      'priceData': priceData,
-    }
+  const tableName = 'TickerData'
+  const insertItem = {
+    'ticker': ticker,
+    'priceData': priceData,
   }
 
-  return new Promise((resolve, reject) => {
-    docClient.put(params, function(err: any, data: any) {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(data)
-      }
-    })
-  })
+  return dynamoDb.writeTable(tableName, insertItem)
 }
