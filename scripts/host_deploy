@@ -11,5 +11,5 @@ git pull
 npm install
 npm run build
 pm2 delete StockData
-pm2 start build/src/app.js --name StockData
+pm2 start build/src/index.js --name StockData
 pm2 save
