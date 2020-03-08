@@ -23,7 +23,7 @@ const mailClient = new MailSender(gmailCredentials)
 mailClient.setFrom('"StockData" <ryankrol.m@gmail.com>')
 mailClient.setTo('ryankrol.m@gmail.com')
 
-schedule.scheduleJob('0 0 0 * * *', async () => {
+schedule.scheduleJob('0 0 12 * * *', async () => {
   await mailClient.sendMail('Beginning stock data udpate!', '')
 
   // fetch the tickers for the index we want to get data for - in this case the FTSE 350
