@@ -25,7 +25,7 @@ mailClient.setTo('ryankrol.m@gmail.com')
 
 mailClient.sendMail('Mail client setup!', '')
 
-schedule.scheduleJob('0 33 23 * * *', async () => {
+schedule.scheduleJob('0 42 23 * * *', async () => {
   try {
     await mailClient.sendMail('Beginning stock data update!', '')
 
