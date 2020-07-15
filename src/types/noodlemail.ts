@@ -1,1 +1,1 @@
-declare module 'noodlemail';
+declare module 'noodle-email'
