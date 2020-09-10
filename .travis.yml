@@ -7,9 +7,6 @@ deploy:
   script: bash scripts/deploy $AES_PASS
   on:
     branch: master
-install:
-  - npm uninstall typescript --no-save
-  - npm install
 branches:
   only:
   - master
