@@ -3,6 +3,12 @@ import fetch from 'node-fetch';
 const BASE_URL = 'http://stocktickersapi.xyz/api/tickers';
 const DEFAULT_INDEX = 'ftse_350';
 
+/**
+ *
+ * @param {string} index - The stock index that we're fetching the tickers for
+ * @returns {Array} An array of tickers in the given index
+ *
+ */
 async function fetchIndexTickers(index) {
   const url = buildApiUrl(index);
 
@@ -17,6 +23,12 @@ async function fetchIndexTickers(index) {
     });
 }
 
+/**
+ *
+ * @param {string} index - The stock index that we're fetching the tickers for
+ * @returns {string} The URL of the API we use to fetch the index tickers
+ *
+ */
 function buildApiUrl(index) {
   const urlIndex = index || DEFAULT_INDEX;
   const url = `${BASE_URL}/${urlIndex}`;
@@ -26,6 +38,12 @@ function buildApiUrl(index) {
   return url;
 }
 
+/**
+ *
+ * @param {object} response - The API containing our tickers
+ * @returns {void} Nothing
+ *
+ */
 function validateApiResponse(response) {
   if (!response) {
     throw new Error('Could not validate the stocktickersapi response');
