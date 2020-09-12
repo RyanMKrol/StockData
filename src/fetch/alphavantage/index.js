@@ -58,7 +58,10 @@ async function fetchTickerPriceData(ticker) {
     .then((res) => res.json())
     .then((resJson) => {
       validateApiResponse(resJson);
-      return resJson;
+      return {
+        ticker,
+        response: resJson,
+      };
     })
     .catch(() => undefined);
 }
