@@ -1,3 +1,7 @@
+/**
+ * @module AlphaVantageData
+ */
+
 import fetch from 'node-fetch';
 
 import credentials from '../../../credentials/alphavantage.json';
@@ -7,42 +11,42 @@ const BASE_URL = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&o
 /**
  * @typedef AlphaVantageApiResponse
  * @type {object}
- * @property {TickerMetaData} metaData - the meta data relating to the API response
- * @property {TickerDataPriceSeries} timeSeries - the meta data relating to the API response
+ * @property {TickerMetaData} metaData - The meta data relating to the API response
+ * @property {TickerDataPriceSeries} timeSeries - The meta data relating to the API response
  */
 
 /**
  * @typedef TickerMetaData
  * @type {object}
- * @property {string} information - string detailing what data we have.
- * @property {string} symbol - the ticker's key.
- * @property {string} lastRefreshed - date the data was last refreshed.
- * @property {string} outputSize - type of API response.
- * @property {string} timeZone - the time zone.
+ * @property {string} information - String detailing what data we have.
+ * @property {string} symbol - The ticker's key.
+ * @property {string} lastRefreshed - Date the data was last refreshed.
+ * @property {string} outputSize - Type of API response.
+ * @property {string} timeZone - The time zone.
  */
 
 /**
  * @typedef TickerDataPriceSeries
  * @type {object}
- * @property {object.<string, TickerPriceData>} timeSeriesDaily - an
+ * @property {object.<string, TickerPriceData>} timeSeriesDaily - An
  *  object containing all the price data
  */
 
 /**
  * @typedef TickerPriceData
  * @type {object}
- * @property {string} open - the open price for the day
- * @property {string} high - the highest price for the day
- * @property {string} low - the lowest price for the day
- * @property {string} close -  the closing price for the day
- * @property {string} volume - the volume for the day
+ * @property {string} open - The open price for the day
+ * @property {string} high - The highest price for the day
+ * @property {string} low - The lowest price for the day
+ * @property {string} close -  The closing price for the day
+ * @property {string} volume - The volume for the day
  */
 
 /**
  * Method to fetch the historic price data for a given ticker
  *
  * @param {string} ticker - The ticker, e.g. GAW.L
- * @returns {object} An object representing price data
+ * @returns {AlphaVantageApiResponse} An object representing price data
  */
 async function fetchTickerPriceData(ticker) {
   const url = buildApiUrl(ticker);
@@ -74,7 +78,7 @@ function buildApiUrl(ticker) {
 /**
  * Method to validate the price data API response
  *
- * @param {object} response - The initial API response
+ * @param {AlphaVantageApiResponse} response - The initial API response
  * @returns {void} Nothing
  */
 function validateApiResponse(response) {

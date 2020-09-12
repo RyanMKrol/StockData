@@ -1,12 +1,21 @@
+/**
+ * @module StockTickersApiData
+ */
+
 import fetch from 'node-fetch';
 
 const BASE_URL = 'http://stocktickersapi.xyz/api/tickers';
 const DEFAULT_INDEX = 'ftse_350';
 
 /**
+ * @typedef StockTickersApiResponse
+ * @type {Array.<string>}
+ */
+
+/**
  *
  * @param {string} index - The stock index that we're fetching the tickers for
- * @returns {Array} An array of tickers in the given index
+ * @returns {StockTickersApiResponse} An array of tickers in the given index
  *
  */
 async function fetchIndexTickers(index) {
@@ -40,7 +49,7 @@ function buildApiUrl(index) {
 
 /**
  *
- * @param {Array} response - The API containing our tickers
+ * @param {StockTickersApiResponse} response - The API containing our tickers
  * @returns {void} Nothing
  *
  */
