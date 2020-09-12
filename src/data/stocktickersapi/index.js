@@ -40,7 +40,7 @@ function buildApiUrl(index) {
 
 /**
  *
- * @param {object} response - The API containing our tickers
+ * @param {Array} response - The API containing our tickers
  * @returns {void} Nothing
  *
  */
