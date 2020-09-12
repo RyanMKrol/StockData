@@ -2,6 +2,9 @@
  * @module AlphaVantageData
  */
 
+// Documentation found here:
+// https://www.alphavantage.co/support/#support
+
 import fetch from 'node-fetch';
 
 import credentials from '../../../credentials/alphavantage.json';

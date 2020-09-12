@@ -21,6 +21,6 @@ export default function processAlphavantageApiResponse(apiResponse) {
 
   return Object.keys(priceSeries).map((key) => ({
     date: key,
-    priceData: priceSeries[key]['4. close'],
+    price: priceSeries[key]['4. close'],
   }));
 }
