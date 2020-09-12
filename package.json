@@ -17,8 +17,10 @@
     "@babel/polyfill": "^7.10.4",
     "core-js": "^3.6.5",
     "node-fetch": "^2.6.1",
-    "noodle-dynamo": "^1.0.5",
-    "noodle-utils": "^1.0.0"
+    "noodle-dynamo": "^1.0.6",
+    "noodle-utils": "^1.0.0",
+    "sizeof": "^1.0.0",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.4",
