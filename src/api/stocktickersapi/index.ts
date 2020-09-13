@@ -1,1 +1,0 @@
-export { fetchIndexTickers } from './tickers'
