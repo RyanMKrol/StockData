@@ -4,8 +4,9 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run lint && ./node_modules/.bin/babel src --out-dir build",
+    "fetch-everything": "npm run-script build && node build/scripts/fetchEverything.js",
+    "fetch-recent": "npm run-script build && node build/scripts/fetchRecent.js",
     "lint": "eslint src/ --ext .js",
-    "start": "npm run-script build && node build/scripts/fetchRecent.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "husky": {

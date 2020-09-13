@@ -23,8 +23,6 @@ async function main() {
   const queue = new DynamoPersistanceQueue(dynamoCredentials);
   const tickers = await fetchIndexTickers();
 
-  console.log(queue);
-
   for (let index = 0; index < tickers.length; index += 1) {
     const ticker = tickers[index];
 
@@ -35,10 +33,8 @@ async function main() {
       processAlphavantageApiResponse,
     )(ticker);
 
-    console.log(data);
-
     // push the price data to our processing queue
-    // queue.pushBatch(data);
+    queue.pushBatch(data);
 
     // wait, so that we don't burn through the API limits
     await sleep(MINUTES_BETWEEN_QUEUE_PUSHES * MS_IN_M);
