@@ -46,12 +46,15 @@ export function limitAlphaVantageApiResponse(responseData, limitAmount) {
   const originalPriceSeries = response['Time Series (Daily)'];
   const priceSeries = Object.keys(originalPriceSeries)
     .slice(0, limitAmount)
-    .map((date) => originalPriceSeries[date]);
+    .reduce((acc, date) => {
+      acc[date] = originalPriceSeries[date];
+      return acc;
+    }, {});
 
   return {
     ticker,
     response: {
-      'Time Series (Daily)': priceSeries.slice(0, limitAmount),
+      'Time Series (Daily)': priceSeries,
     },
   };
 }
