@@ -18,6 +18,7 @@
       {
         "functions": false
       }
-    ]
+    ],
+    "no-await-in-loop": "off"
   }
 }
