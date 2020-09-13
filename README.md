@@ -34,4 +34,5 @@ Execution Time:
 - DynamoDB
   - 5 Write Capacity Units (WCU)
   - 1 item of less than 1KB being stored per second, is 1 WCU
-- StockTickersApi \* None
+- StockTickersApi
+  - None
