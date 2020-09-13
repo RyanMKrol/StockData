@@ -2,8 +2,6 @@
  * @module DataProcessing
  */
 
-import { v4 as uuidv4 } from 'uuid';
-
 /**
  * @typedef StockTickerData
  * @type {object}
@@ -25,7 +23,7 @@ export default function processAlphavantageApiResponse(responseData) {
   const priceSeries = response['Time Series (Daily)'];
 
   return Object.keys(priceSeries).map((date) => ({
-    id: uuidv4(),
+    id: `${ticker}-${date}`,
     ticker,
     date,
     price: priceSeries[date]['4. close'],
