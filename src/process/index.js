@@ -20,9 +20,6 @@ export function processAlphavantageApiResponse(responseData) {
   const { ticker } = responseData;
   const { response } = responseData;
 
-  console.log(responseData);
-  console.log(response);
-
   return Object.keys(response).map((date) => ({
     id: `${ticker}-${date}`,
     ticker,

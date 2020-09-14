@@ -1,6 +1,6 @@
 import { pipeline, DynamoPersistanceQueue, sleep } from 'noodle-utils';
 
-import { fetchIndexTickers, fetchTickerPriceData } from '../fetch';
+import { fetchIndexTickers, fetchTickerPriceData, fetchTickersNeedingData } from '../fetch';
 import { processAlphavantageApiResponse } from '../process';
 
 import dynamoCredentials from '../../credentials/dynamo.json';
@@ -16,7 +16,7 @@ const MS_IN_M = 60000;
  */
 async function main() {
   const queue = new DynamoPersistanceQueue(dynamoCredentials);
-  const tickers = await fetchIndexTickers();
+  const tickers = await pipeline(fetchIndexTickers, fetchTickersNeedingData, (x) => x.sort())();
 
   for (let index = 0; index < tickers.length; index += 1) {
     const ticker = tickers[index];
