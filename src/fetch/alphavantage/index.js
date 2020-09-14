@@ -60,10 +60,13 @@ async function fetchTickerPriceData(ticker) {
       validateApiResponse(resJson);
       return {
         ticker,
-        response: resJson,
+        response: resJson['Time Series (Daily)'],
       };
     })
-    .catch(() => undefined);
+    .catch(() => ({
+      ticker,
+      response: {},
+    }));
 }
 
 /**
