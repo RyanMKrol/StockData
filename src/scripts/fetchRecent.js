@@ -28,7 +28,7 @@ mailClient.setTo('ryankrol.m@gmail.com');
  */
 async function main() {
   const queue = new DynamoPersistanceQueue(dynamoCredentials);
-  const tickers = await fetchIndexTickers();
+  const tickers = await pipeline(fetchIndexTickers, (x) => x.sort())();
 
   for (let index = 0; index < tickers.length; index += 1) {
     const ticker = tickers[index];

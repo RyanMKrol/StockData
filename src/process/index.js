@@ -20,13 +20,11 @@ export function processAlphavantageApiResponse(responseData) {
   const { ticker } = responseData;
   const { response } = responseData;
 
-  const priceSeries = response['Time Series (Daily)'];
-
-  return Object.keys(priceSeries).map((date) => ({
+  return Object.keys(response).map((date) => ({
     id: `${ticker}-${date}`,
     ticker,
     date,
-    price: priceSeries[date]['4. close'],
+    price: response[date]['4. close'],
   }));
 }
 
@@ -43,18 +41,15 @@ export function limitAlphaVantageApiResponse(responseData, limitAmount) {
   const { ticker } = responseData;
   const { response } = responseData;
 
-  const originalPriceSeries = response['Time Series (Daily)'];
-  const priceSeries = Object.keys(originalPriceSeries)
+  const priceSeries = Object.keys(response)
     .slice(0, limitAmount)
     .reduce((acc, date) => {
-      acc[date] = originalPriceSeries[date];
+      acc[date] = priceSeries[date];
       return acc;
     }, {});
 
   return {
     ticker,
-    response: {
-      'Time Series (Daily)': priceSeries,
-    },
+    response: priceSeries,
   };
 }
