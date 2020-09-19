@@ -13,7 +13,7 @@ import dynamoCredentials from '../../credentials/dynamo.json';
 // storing the most recent 30 items
 const NUM_PRICE_ITEMS_TO_STORE = 30;
 
-const MINUTES_BETWEEN_QUEUE_PUSHES = 1;
+const MINUTES_BETWEEN_QUEUE_PUSHES = 0.5;
 const MS_IN_M = 60000;
 
 const mailClient = new MailSender(gmailCredentials);
@@ -33,6 +33,8 @@ async function main() {
   for (let index = 0; index < tickers.length; index += 1) {
     const ticker = tickers[index];
 
+    process.stdout.write(`Fetching data for ticker: ${ticker}\n`);
+
     // fetch price data for the given ticker
     const data = await pipeline(
       fetchTickerPriceData,
@@ -40,8 +42,12 @@ async function main() {
       processAlphavantageApiResponse,
     )(ticker);
 
+    process.stdout.write(`Pushing ${data.length} items to queue\n`);
+
     // push the price data to our processing queue
     queue.pushBatch(data);
+
+    process.stdout.write('Waiting for next data fetch\n');
 
     // wait, so that we don't burn through the API limits
     await sleep(MINUTES_BETWEEN_QUEUE_PUSHES * MS_IN_M);
