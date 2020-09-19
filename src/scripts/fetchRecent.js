@@ -7,8 +7,9 @@ import schedule from 'node-schedule';
 import { fetchIndexTickers, fetchTickerPriceData } from '../fetch';
 import { processAlphavantageApiResponse, limitAlphaVantageApiResponse } from '../process';
 
-import gmailCredentials from '../../credentials/gmail.json';
-import dynamoCredentials from '../../credentials/dynamo.json';
+import {
+  DYNAMO_CREDENTIALS, GMAIL_CREDENTIALS, DYNAMO_REGION, DYNAMO_TABLE,
+} from '../constants';
 
 // storing the most recent 30 items
 const NUM_PRICE_ITEMS_TO_STORE = 30;
@@ -16,7 +17,7 @@ const NUM_PRICE_ITEMS_TO_STORE = 30;
 const MINUTES_BETWEEN_QUEUE_PUSHES = 0.5;
 const MS_IN_M = 60000;
 
-const mailClient = new MailSender(gmailCredentials);
+const mailClient = new MailSender(GMAIL_CREDENTIALS);
 mailClient.setFrom('"StockDataUpdater" <ryankrol.m@gmail.com>');
 mailClient.setTo('ryankrol.m@gmail.com');
 
@@ -27,7 +28,7 @@ mailClient.setTo('ryankrol.m@gmail.com');
  *
  */
 async function main() {
-  const queue = new DynamoPersistanceQueue(dynamoCredentials);
+  const queue = new DynamoPersistanceQueue(DYNAMO_CREDENTIALS, DYNAMO_REGION, DYNAMO_TABLE);
   const tickers = await pipeline(fetchIndexTickers, (x) => x.sort())();
 
   for (let index = 0; index < tickers.length; index += 1) {

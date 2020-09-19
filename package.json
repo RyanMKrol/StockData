@@ -22,7 +22,7 @@
     "node-schedule": "^1.3.2",
     "noodle-dynamo": "^1.0.6",
     "noodle-email": "^1.0.1",
-    "noodle-utils": "^1.0.1"
+    "noodle-utils": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.4",
