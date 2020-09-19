@@ -44,7 +44,7 @@ export function limitAlphaVantageApiResponse(responseData, limitAmount) {
   const priceSeries = Object.keys(response)
     .slice(0, limitAmount)
     .reduce((acc, date) => {
-      acc[date] = priceSeries[date];
+      acc[date] = response[date];
       return acc;
     }, {});
 
