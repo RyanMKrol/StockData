@@ -1,6 +1,6 @@
 import MailSender from 'noodle-email';
 import {
-  pipeline, pipelineClosureMethod, DynamoPersistanceQueue, sleep,
+  pipeline, pipelineClosureMethod, DynamoWriteQueue, sleep,
 } from 'noodle-utils';
 import schedule from 'node-schedule';
 
@@ -28,7 +28,7 @@ mailClient.setTo('ryankrol.m@gmail.com');
  *
  */
 async function main() {
-  const queue = new DynamoPersistanceQueue(DYNAMO_CREDENTIALS, DYNAMO_REGION, DYNAMO_TABLE);
+  const queue = new DynamoWriteQueue(DYNAMO_CREDENTIALS, DYNAMO_REGION, DYNAMO_TABLE);
   const tickers = await pipeline(fetchIndexTickers, (x) => x.sort())();
 
   for (let index = 0; index < tickers.length; index += 1) {
