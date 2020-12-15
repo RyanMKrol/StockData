@@ -1,3 +1,7 @@
+> **Note: This repo is now deprecated. All functionality has been migrated to [StockAPI](https://github.com/RyanMKrol/StockAPI)**
+
+---
+
 # StockDataUpdater
 
 ## Overview
